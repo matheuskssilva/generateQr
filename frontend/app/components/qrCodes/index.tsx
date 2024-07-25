@@ -3,30 +3,7 @@ import { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 
 const QRCodeGenerator = () => {
-  const [text, setText] = useState('');
-  const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    const savedQRCode = localStorage.getItem('qrCode');
-    if (savedQRCode) {
-      setText(savedQRCode);
-      setQrCodeUrl(savedQRCode);
-    }
-  }, []);
-
-  const generateQRCode = () => {
-    setQrCodeUrl(text);
-    localStorage.setItem('qrCode', text); 
-
-   
-    fetch('/api/saveQRCode', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ qrCode: text }),
-    });
-  };
+ 
 
   return (
     <div>
