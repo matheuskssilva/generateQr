@@ -17,6 +17,20 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog"
+  
+
 import { MdDeleteForever, MdModeEdit } from "react-icons/md"
 import { IoMdDownload } from "react-icons/io"
 
@@ -91,8 +105,7 @@ export const Hero = () => {
   }
 
   const removeQrCode = async (indexToRemove: number) => {
-    const confirmed = window.confirm("Tem certeza que deseja excluir?")
-    if (!confirmed) return
+   
 
     const updatedQRCodes = qrCodes.filter((_, index) => index !== indexToRemove)
     setQrCodes(updatedQRCodes)
@@ -181,7 +194,7 @@ export const Hero = () => {
               <div className="flex mt-4">
                 <div className="flex flex-col gap-4">
                   <h2 className="max-w-60 w-fit">Titulo: <span className="font-bold">{qrCode.title}</span></h2>
-                  <h2>Url: {qrCode.url}</h2>
+                  <h2>Url: <span className="font-bold">{qrCode.url}</span></h2>
                 </div>
               
                 <div className="flex gap-2 ml-[150px] fixed left-[53%]">
@@ -191,8 +204,24 @@ export const Hero = () => {
                   <Button variant="outline" className="bg-green-500 text-xl" onClick={() => handleDownloadQrCode(index)}>
                     <IoMdDownload />
                   </Button>
-                  <Button variant="destructive" onClick={() => removeQrCode(index)}>
-                    <MdDeleteForever className="text-xl" />
+                  <Button variant="destructive">
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                        <MdDeleteForever className="text-xl" />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                        <AlertDialogTitle>Tem certeza que deseja excluir o Qr Code?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Caso escolha em excluir o QrCode será uma ação permanente.
+                        </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => removeQrCode(index)}>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                    </AlertDialog>
                   </Button>
                 </div>
               </div>
